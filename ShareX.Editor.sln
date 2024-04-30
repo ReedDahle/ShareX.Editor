@@ -1,0 +1,70 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShareX.HelpersLib", "ShareX.HelpersLib\ShareX.HelpersLib.csproj", "{6236D51D-CFA4-4CEC-ADFC-D38ED8A47059}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShareX.ImageEffectsLib", "ShareX.ImageEffectsLib\ShareX.ImageEffectsLib.csproj", "{715B0764-C18C-4CE5-A314-9EA36FB12AC8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShareX.MediaLib", "ShareX.MediaLib\ShareX.MediaLib.csproj", "{C3D0692D-69B5-4229-AE99-04702AA90A94}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShareX.ScreenCaptureLib", "ShareX.ScreenCaptureLib\ShareX.ScreenCaptureLib.csproj", "{5D18869F-665A-4196-944D-BD8E8FB8B268}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		MicrosoftStore|Any CPU = MicrosoftStore|Any CPU
+		MicrosoftStoreDebug|Any CPU = MicrosoftStoreDebug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Steam|Any CPU = Steam|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6236D51D-CFA4-4CEC-ADFC-D38ED8A47059}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6236D51D-CFA4-4CEC-ADFC-D38ED8A47059}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6236D51D-CFA4-4CEC-ADFC-D38ED8A47059}.MicrosoftStore|Any CPU.ActiveCfg = MicrosoftStore|Any CPU
+		{6236D51D-CFA4-4CEC-ADFC-D38ED8A47059}.MicrosoftStore|Any CPU.Build.0 = MicrosoftStore|Any CPU
+		{6236D51D-CFA4-4CEC-ADFC-D38ED8A47059}.MicrosoftStoreDebug|Any CPU.ActiveCfg = MicrosoftStoreDebug|Any CPU
+		{6236D51D-CFA4-4CEC-ADFC-D38ED8A47059}.MicrosoftStoreDebug|Any CPU.Build.0 = MicrosoftStoreDebug|Any CPU
+		{6236D51D-CFA4-4CEC-ADFC-D38ED8A47059}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6236D51D-CFA4-4CEC-ADFC-D38ED8A47059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6236D51D-CFA4-4CEC-ADFC-D38ED8A47059}.Steam|Any CPU.ActiveCfg = Steam|Any CPU
+		{6236D51D-CFA4-4CEC-ADFC-D38ED8A47059}.Steam|Any CPU.Build.0 = Steam|Any CPU
+		{715B0764-C18C-4CE5-A314-9EA36FB12AC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{715B0764-C18C-4CE5-A314-9EA36FB12AC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{715B0764-C18C-4CE5-A314-9EA36FB12AC8}.MicrosoftStore|Any CPU.ActiveCfg = MicrosoftStore|Any CPU
+		{715B0764-C18C-4CE5-A314-9EA36FB12AC8}.MicrosoftStore|Any CPU.Build.0 = MicrosoftStore|Any CPU
+		{715B0764-C18C-4CE5-A314-9EA36FB12AC8}.MicrosoftStoreDebug|Any CPU.ActiveCfg = MicrosoftStoreDebug|Any CPU
+		{715B0764-C18C-4CE5-A314-9EA36FB12AC8}.MicrosoftStoreDebug|Any CPU.Build.0 = MicrosoftStoreDebug|Any CPU
+		{715B0764-C18C-4CE5-A314-9EA36FB12AC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{715B0764-C18C-4CE5-A314-9EA36FB12AC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{715B0764-C18C-4CE5-A314-9EA36FB12AC8}.Steam|Any CPU.ActiveCfg = Steam|Any CPU
+		{715B0764-C18C-4CE5-A314-9EA36FB12AC8}.Steam|Any CPU.Build.0 = Steam|Any CPU
+		{C3D0692D-69B5-4229-AE99-04702AA90A94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3D0692D-69B5-4229-AE99-04702AA90A94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3D0692D-69B5-4229-AE99-04702AA90A94}.MicrosoftStore|Any CPU.ActiveCfg = MicrosoftStore|Any CPU
+		{C3D0692D-69B5-4229-AE99-04702AA90A94}.MicrosoftStore|Any CPU.Build.0 = MicrosoftStore|Any CPU
+		{C3D0692D-69B5-4229-AE99-04702AA90A94}.MicrosoftStoreDebug|Any CPU.ActiveCfg = MicrosoftStoreDebug|Any CPU
+		{C3D0692D-69B5-4229-AE99-04702AA90A94}.MicrosoftStoreDebug|Any CPU.Build.0 = MicrosoftStoreDebug|Any CPU
+		{C3D0692D-69B5-4229-AE99-04702AA90A94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3D0692D-69B5-4229-AE99-04702AA90A94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3D0692D-69B5-4229-AE99-04702AA90A94}.Steam|Any CPU.ActiveCfg = Steam|Any CPU
+		{C3D0692D-69B5-4229-AE99-04702AA90A94}.Steam|Any CPU.Build.0 = Steam|Any CPU
+		{5D18869F-665A-4196-944D-BD8E8FB8B268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D18869F-665A-4196-944D-BD8E8FB8B268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D18869F-665A-4196-944D-BD8E8FB8B268}.MicrosoftStore|Any CPU.ActiveCfg = MicrosoftStore|Any CPU
+		{5D18869F-665A-4196-944D-BD8E8FB8B268}.MicrosoftStore|Any CPU.Build.0 = MicrosoftStore|Any CPU
+		{5D18869F-665A-4196-944D-BD8E8FB8B268}.MicrosoftStoreDebug|Any CPU.ActiveCfg = MicrosoftStoreDebug|Any CPU
+		{5D18869F-665A-4196-944D-BD8E8FB8B268}.MicrosoftStoreDebug|Any CPU.Build.0 = MicrosoftStoreDebug|Any CPU
+		{5D18869F-665A-4196-944D-BD8E8FB8B268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D18869F-665A-4196-944D-BD8E8FB8B268}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D18869F-665A-4196-944D-BD8E8FB8B268}.Steam|Any CPU.ActiveCfg = Steam|Any CPU
+		{5D18869F-665A-4196-944D-BD8E8FB8B268}.Steam|Any CPU.Build.0 = Steam|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DEACF1C2-28EE-44DF-B55E-2234F6137272}
+	EndGlobalSection
+EndGlobal

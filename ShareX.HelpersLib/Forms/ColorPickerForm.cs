@@ -46,7 +46,7 @@ namespace ShareX.HelpersLib
         public ColorPickerForm(Color currentColor, bool isScreenColorPickerMode = false, bool checkClipboard = true, ColorPickerOptions options = null)
         {
             InitializeComponent();
-            ShareXResources.ApplyTheme(this, true);
+            //ShareXResources.ApplyTheme(this, true);  //TODO
             clipboardStatusHider = new ControlHider(btnClipboardStatus, 2000);
 
             IsScreenColorPickerMode = isScreenColorPickerMode;

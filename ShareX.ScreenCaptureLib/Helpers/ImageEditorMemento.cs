@@ -29,7 +29,7 @@ using System.Drawing;
 
 namespace ShareX.ScreenCaptureLib
 {
-    internal class ImageEditorMemento : IDisposable
+    public class ImageEditorMemento : IDisposable // RCD 4-30-24
     {
         public List<BaseShape> Shapes { get; private set; }
         public RectangleF CanvasRectangle { get; private set; }

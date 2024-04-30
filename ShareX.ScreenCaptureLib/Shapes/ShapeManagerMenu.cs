@@ -1,5 +1,5 @@
 ﻿#region License Information (GPL v3)
-
+//TODO
 /*
     ShareX - A program that allows you to take screenshots and share any file type
     Copyright (c) 2007-2024 ShareX Team
@@ -32,7 +32,7 @@ using System.Windows.Forms;
 
 namespace ShareX.ScreenCaptureLib
 {
-    internal partial class ShapeManager
+    public partial class ShapeManager // RCD 4-30-24
     {
         public bool ToolbarCreated { get; private set; }
         public bool ToolbarCollapsed { get; private set; }
@@ -1186,7 +1186,7 @@ namespace ShareX.ScreenCaptureLib
 
             ShareXResources.ApplyTheme(menuForm, false, false);
 
-            menuForm.Show(Form);
+            //menuForm.Show(Form); // RCD 04-29-24
 
             UpdateMenu();
 
