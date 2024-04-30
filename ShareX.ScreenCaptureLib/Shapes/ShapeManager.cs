@@ -1,5 +1,5 @@
 ﻿#region License Information (GPL v3)
-
+//TODO
 /*
     ShareX - A program that allows you to take screenshots and share any file type
     Copyright (c) 2007-2024 ShareX Team
@@ -35,7 +35,7 @@ using System.Windows.Forms;
 
 namespace ShareX.ScreenCaptureLib
 {
-    internal partial class ShapeManager : IDisposable
+    public partial class ShapeManager : IDisposable // RCD 04-29-24
     {
         public List<BaseShape> Shapes { get; private set; } = new List<BaseShape>();
 
@@ -47,7 +47,7 @@ namespace ShareX.ScreenCaptureLib
             {
                 return currentShape;
             }
-            private set
+            set // RCD 04-29-24
             {
                 currentShape = value;
 
@@ -317,7 +317,7 @@ namespace ShareX.ScreenCaptureLib
         private bool isLeftPressed, isRightPressed, isUpPressed, isDownPressed;
         private ScrollbarManager scrollbarManager;
 
-        public ShapeManager(RegionCaptureForm form)
+        public ShapeManager(RegionCaptureForm form, Form parentForm) // RCD 04-29-24
         {
             Form = form;
             Options = form.Options;
@@ -343,6 +343,15 @@ namespace ShareX.ScreenCaptureLib
             form.MouseWheel += form_MouseWheel;
             form.KeyDown += form_KeyDown;
             form.KeyUp += form_KeyUp;
+
+            parentForm.Shown += form_Shown; // RCD 04-29-24
+            parentForm.LostFocus += form_LostFocus; // RCD 04-29-24
+            parentForm.MouseDown += form_MouseDown; // RCD 04-29-24
+            parentForm.MouseUp += form_MouseUp; // RCD 04-29-24
+            parentForm.MouseDoubleClick += form_MouseDoubleClick; // RCD 04-29-24
+            parentForm.MouseWheel += form_MouseWheel; // RCD 04-29-24
+            parentForm.KeyDown += form_KeyDown; // RCD 04-29-24
+            parentForm.KeyUp += form_KeyUp; // RCD 04-29-24
 
             CurrentShape = null;
 
@@ -430,7 +439,7 @@ namespace ShareX.ScreenCaptureLib
                     StartRegionSelection();
                 }
             }
-            else if (e.Button == MouseButtons.Middle)
+            else if (e.Button == MouseButtons.Right) // RCD 04-29-24
             {
                 if (Form.IsEditorMode)
                 {
@@ -448,27 +457,27 @@ namespace ShareX.ScreenCaptureLib
                     EndRegionSelection();
                 }
             }
-            else if (e.Button == MouseButtons.Right)
-            {
-                if (IsCreating)
-                {
-                    DeleteCurrentShape();
-                    EndRegionSelection();
-                }
-                else if (Form.IsAnnotationMode)
-                {
-                    RunAction(Options.RegionCaptureActionRightClick);
-                }
-                else if (IsShapeIntersect())
-                {
-                    DeleteIntersectShape();
-                }
-                else
-                {
-                    Form.CloseWindow();
-                }
-            }
-            else if (e.Button == MouseButtons.Middle)
+            //else if (e.Button == MouseButtons.Right) // RCD 4-30-24
+            //{
+            //    if (IsCreating)
+            //    {
+            //        DeleteCurrentShape();
+            //        EndRegionSelection();
+            //    }
+            //    else if (Form.IsAnnotationMode)
+            //    {
+            //        RunAction(Options.RegionCaptureActionRightClick);
+            //    }
+            //    else if (IsShapeIntersect())
+            //    {
+            //        DeleteIntersectShape();
+            //    }
+            //    else
+            //    {
+            //        Form.CloseWindow();
+            //    }
+            //}
+            else if (e.Button == MouseButtons.Right) // RCD 4-30-24
             {
                 if (Form.IsEditorMode)
                 {
@@ -507,7 +516,7 @@ namespace ShareX.ScreenCaptureLib
 
         private void form_MouseWheel(object sender, MouseEventArgs e)
         {
-            if (Control.ModifierKeys == Keys.None)
+            if (Control.ModifierKeys == Keys.None && Options.ShowMagnifier)     // RCD 8/26/2023 disable magnifier completely if Show Magnifier is set to false
             {
                 if (e.Delta > 0)
                 {
@@ -1238,7 +1247,7 @@ namespace ShareX.ScreenCaptureLib
             return shape;
         }
 
-        private void UpdateCurrentShape()
+        public void UpdateCurrentShape()    // RCD 8/18/23
         {
             BaseShape shape = CurrentShape;
 
@@ -1487,7 +1496,7 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        private void DeleteCurrentShape()
+        public void DeleteCurrentShape() // RCD 04-29-24
         {
             DeleteShape(CurrentShape);
         }
@@ -1497,7 +1506,7 @@ namespace ShareX.ScreenCaptureLib
             DeleteShape(GetIntersectShape());
         }
 
-        private void DeleteAllShapes(bool takeSnapshot = false)
+        public void DeleteAllShapes(bool takeSnapshot = false) // RCD 04-29-24
         {
             if (Shapes.Count > 0)
             {
@@ -1559,7 +1568,7 @@ namespace ShareX.ScreenCaptureLib
             return GetIntersectShape() != null;
         }
 
-        public void RestoreState(ImageEditorMemento memento)
+        public void RestoreState(ImageEditorMemento memento) // TODO: changed from UndoShape()
         {
             if (memento != null)
             {
@@ -1581,6 +1590,14 @@ namespace ShareX.ScreenCaptureLib
 
                 OnImageModified();
                 UpdateMenu();
+            }
+        }
+
+        public void UndoShape() // RCD 4-30-24
+        {
+            if (Shapes.Count > 0)
+            {
+                DeleteShape(Shapes[Shapes.Count - 1]);
             }
         }
 
@@ -1845,7 +1862,7 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        private void DuplicateCurrrentShape(bool insertMousePosition)
+        public void DuplicateCurrrentShape(bool insertMousePosition)  // RCD 04-29-24
         {
             BaseShape shape = CurrentShape;
 
@@ -1871,7 +1888,7 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        private void PasteFromClipboard(bool insertMousePosition)
+        public void PasteFromClipboard(bool insertMousePosition)  // RCD 04-29-24
         {
             if (ClipboardHelpers.ContainsImage())
             {
@@ -2157,7 +2174,7 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        private void ChangeImageSize()
+        public void ChangeImageSize()  // RCD 04-29-24
         {
             Form.Pause();
 
@@ -2188,7 +2205,7 @@ namespace ShareX.ScreenCaptureLib
             Form.Resume();
         }
 
-        private void ChangeCanvasSize()
+        public void ChangeCanvasSize()  // RCD 04-29-24
         {
             Form.Pause();
 
@@ -2271,7 +2288,7 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        private void RotateImage(RotateFlipType type)
+        public void RotateImage(RotateFlipType type)  // RCD 04-29-24
         {
             history.CreateCanvasMemento();
 
@@ -2313,7 +2330,7 @@ namespace ShareX.ScreenCaptureLib
             Form.Resume();
         }
 
-        private bool PickColor(Color currentColor, out Color newColor)
+        public bool PickColor(Color currentColor, out Color newColor)  // RCD 04-29-24
         {
             Func<PointInfo> openScreenColorPicker = null;
 

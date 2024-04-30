@@ -287,7 +287,8 @@ namespace ShareX.ScreenCaptureLib
         Region,
         Drawing,
         Effect,
-        Tool
+        Tool,
+        FloodFill // RCD 4-30-24
     }
 
     public enum ShapeType // Localized
@@ -316,7 +317,8 @@ namespace ShareX.ScreenCaptureLib
         EffectPixelate,
         EffectHighlight,
         ToolCrop,
-        ToolCutOut
+        ToolCutOut,
+        FloodFill // RCD 4-30-24
     }
 
     public enum ImageEditorStartMode // Localized

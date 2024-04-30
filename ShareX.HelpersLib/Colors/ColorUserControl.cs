@@ -29,6 +29,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
+
 
 namespace ShareX.HelpersLib
 {

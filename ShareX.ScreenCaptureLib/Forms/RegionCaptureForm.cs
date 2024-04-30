@@ -1,5 +1,5 @@
-#region License Information (GPL v3)
-
+﻿#region License Information (GPL v3)
+//TODO
 /*
     ShareX - A program that allows you to take screenshots and share any file type
     Copyright (c) 2007-2024 ShareX Team
@@ -41,6 +41,8 @@ namespace ShareX.ScreenCaptureLib
     {
         public static GraphicsPath LastRegionFillPath { get; private set; }
 
+        public static bool DarkMode = false; // RCD 4-30-24
+
         public event Func<Bitmap, string, string> SaveImageRequested;
         public event Func<Bitmap, string, string> SaveImageAsRequested;
         public event Action<Bitmap> CopyImageRequested;
@@ -50,7 +52,7 @@ namespace ShareX.ScreenCaptureLib
         public RegionCaptureOptions Options { get; set; }
         public Rectangle ScreenBounds { get; set; }
         public Rectangle ClientArea { get; private set; }
-        public Bitmap Canvas { get; private set; }
+        public Bitmap Canvas { get; set; } // RCD 4-30-24
         public RectangleF CanvasRectangle { get; internal set; }
         public RegionResult Result { get; private set; }
         public int MonitorIndex { get; set; }
@@ -67,7 +69,7 @@ namespace ShareX.ScreenCaptureLib
 
         internal Vector2 CanvasCenterOffset { get; set; } = new Vector2(0f, 0f);
 
-        internal float ZoomFactor
+        public float ZoomFactor // RCD 4-30-24
         {
             get
             {
@@ -83,13 +85,13 @@ namespace ShareX.ScreenCaptureLib
         internal PointF ScaledClientMousePosition => InputManager.ClientMousePosition.Scale(1 / ZoomFactor);
         internal PointF ScaledClientMouseVelocity => InputManager.MouseVelocity.Scale(1 / ZoomFactor);
 
-        internal ShapeManager ShapeManager { get; private set; }
+        public ShapeManager ShapeManager { get; private set; } // RCD 4-30-24
         internal bool IsClosing { get; private set; }
         internal FPSManager FPSManager { get; private set; }
 
         internal Bitmap DimmedCanvas;
         internal Image CustomNodeImage = Resources.CircleNode;
-        internal int ToolbarHeight;
+        public int ToolbarHeight; // RCD 4-30-24
 
         private InputManager InputManager => ShapeManager.InputManager;
         private TextureBrush backgroundBrush, backgroundHighlightBrush;
@@ -105,8 +107,23 @@ namespace ShareX.ScreenCaptureLib
         private Color canvasBackgroundColor, canvasBorderColor, textColor, textShadowColor, textBackgroundColor, textOuterBorderColor, textInnerBorderColor;
         private float zoomFactor = 1;
 
-        public RegionCaptureForm(RegionCaptureMode mode, RegionCaptureOptions options, Bitmap canvas = null)
+        private Form _parentForm; // RCD 4-30-24
+
+        public Color CanvasBackgroundColor // RCD 4-30-24
         {
+            get
+            {
+                return canvasBackgroundColor;
+            }
+            set
+            {
+                canvasBackgroundColor = value;
+            }
+        } // RCD 4-30-24
+
+        public RegionCaptureForm(Form parentForm, RegionCaptureMode mode, RegionCaptureOptions options, Bitmap canvas = null) // RCD 4-30-24
+        {
+            _parentForm = parentForm; // RCD 4-30-24
             Mode = mode;
             Options = options;
 
@@ -175,7 +192,7 @@ namespace ShareX.ScreenCaptureLib
             else
             {
                 canvasBackgroundColor = Color.FromArgb(200, 200, 200);
-                canvasBorderColor = Color.FromArgb(176, 176, 176);
+                canvasBorderColor = Color.FromArgb(0,0,0,0);//Color.FromArgb(176, 176, 176); // RCD 4-30-24
                 textColor = Color.White;
                 textShadowColor = Color.Black;
                 textBackgroundColor = Color.FromArgb(200, Color.FromArgb(42, 131, 199));
@@ -204,7 +221,7 @@ namespace ShareX.ScreenCaptureLib
             openHandCursor = Helpers.CreateCursor(Resources.openhand);
             closedHandCursor = Helpers.CreateCursor(Resources.closedhand);
             SetDefaultCursor();
-            Icon = ShareXResources.Icon;
+            //Icon = ShareXResources.Icon; // RCD 4-30-24
             SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             UpdateTitle();
             StartPosition = FormStartPosition.Manual;
@@ -221,7 +238,7 @@ namespace ShareX.ScreenCaptureLib
             else
             {
                 FormBorderStyle = FormBorderStyle.Sizable;
-                MinimumSize = new Size(800, 550);
+                //MinimumSize = new Size(800, 550); // RCD 4-30-24
 
                 if (Options.ImageEditorStartMode == ImageEditorStartMode.PreviousState)
                 {
@@ -275,7 +292,8 @@ namespace ShareX.ScreenCaptureLib
             GotFocus += RegionCaptureForm_GotFocus;
             LostFocus += RegionCaptureForm_LostFocus;
             FormClosing += RegionCaptureForm_FormClosing;
-
+            MouseEnter += (object? o, EventArgs e) => { Resume(); }; // RCD 4-30-24
+            MouseLeave += (object? o, EventArgs e) => { Pause(); }; // RCD 4-30-24
             ResumeLayout(false);
         }
 
@@ -291,7 +309,7 @@ namespace ShareX.ScreenCaptureLib
 
                 if (Canvas != null)
                 {
-                    title.AppendFormat(" - {0}x{1}", Canvas.Width, Canvas.Height);
+                    //title.AppendFormat(" - {0}x{1}", Canvas.Width, Canvas.Height); // RCD 4-30-24
                 }
 
                 if (IsZoomed)
@@ -322,7 +340,7 @@ namespace ShareX.ScreenCaptureLib
 
         private void Prepare(Bitmap canvas = null)
         {
-            ShapeManager = new ShapeManager(this);
+            ShapeManager = new ShapeManager(this, _parentForm); // RCD 4-30-24
             ShapeManager.WindowCaptureMode = !IsEditorMode && Options.DetectWindows;
             ShapeManager.IncludeControls = Options.DetectControls;
             ShapeManager.ImageModified += ShapeManager_ImageModified;
@@ -358,13 +376,13 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        internal void InitBackground(Bitmap canvas, bool centerCanvas = true)
+        public void InitBackground(Bitmap canvas, bool centerCanvas = true) // RCD 4-30-24
         {
-            Canvas?.Dispose();
+            if (canvas != Canvas) Canvas?.Dispose(); // RCD 4-30-24
             backgroundBrush?.Dispose();
             backgroundHighlightBrush?.Dispose();
 
-            Canvas = canvas;
+            Canvas = canvas.CloneSafe(); // RCD 4-30-24
 
             if (IsEditorMode)
             {
@@ -537,7 +555,7 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        private void RegionCaptureForm_Shown(object sender, EventArgs e)
+        private void RegionCaptureForm_Shown(object? sender, EventArgs e) // RCD 4-30-24
         {
             this.ForceActivate();
 
@@ -566,28 +584,28 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        private void RegionCaptureForm_Resize(object sender, EventArgs e)
+        private void RegionCaptureForm_Resize(object? sender, EventArgs e) // RCD 4-30-24
         {
             OnMoved();
             PanToOffset(CanvasCenterOffset);
         }
 
-        private void RegionCaptureForm_LocationChanged(object sender, EventArgs e)
+        private void RegionCaptureForm_LocationChanged(object? sender, EventArgs e) // RCD 4-30-24
         {
             OnMoved();
         }
 
-        private void RegionCaptureForm_GotFocus(object sender, EventArgs e)
+        private void RegionCaptureForm_GotFocus(object? sender, EventArgs e) // RCD 4-30-24
         {
             Resume();
         }
 
-        private void RegionCaptureForm_LostFocus(object sender, EventArgs e)
+        private void RegionCaptureForm_LostFocus(object? sender, EventArgs e) // RCD 4-30-24
         {
             Pause();
         }
 
-        private void RegionCaptureForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void RegionCaptureForm_FormClosing(object? sender, FormClosingEventArgs e) // RCD 4-30-24
         {
             if (IsEditorMode)
             {
@@ -626,7 +644,7 @@ namespace ShareX.ScreenCaptureLib
             return result;
         }
 
-        internal void RegionCaptureForm_KeyDown(object sender, KeyEventArgs e)
+        internal void RegionCaptureForm_KeyDown(object? sender, KeyEventArgs e) // RCD 4-30-24
         {
             if (e.KeyData == Keys.Escape)
             {
@@ -706,7 +724,7 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        private void RegionCaptureForm_MouseDown(object sender, MouseEventArgs e)
+        private void RegionCaptureForm_MouseDown(object? sender, MouseEventArgs e) // RCD 4-30-24
         {
             if ((Mode == RegionCaptureMode.OneClick || Mode == RegionCaptureMode.ScreenColorPicker) && e.Button == MouseButtons.Left)
             {
@@ -721,15 +739,15 @@ namespace ShareX.ScreenCaptureLib
             }
         }
 
-        private void RegionCaptureForm_MouseWheel(object sender, MouseEventArgs e)
+        private void RegionCaptureForm_MouseWheel(object? sender, MouseEventArgs e) // RCD 4-30-24
         {
-            if (IsEditorMode && ModifierKeys == Keys.Control)
-            {
-                Zoom(e.Delta > 0);
-            }
+            //if (IsEditorMode && ModifierKeys == Keys.Control) // RCD 4-30-24
+            //{
+            //    Zoom(e.Delta > 0);
+            //}
         }
 
-        private void Zoom(bool zoomIn, bool atMouse = true)
+        public void Zoom(bool zoomIn, bool atMouse = true) // RCD 4-30-24
         {
             PointF clientCenter = new PointF(ClientArea.Width / 2f, ClientArea.Height / 2f);
             PointF scaledCenterBefore = atMouse ? ScaledClientMousePosition : clientCenter.Scale(1 / zoomFactor);
@@ -775,7 +793,7 @@ namespace ShareX.ScreenCaptureLib
             UpdateTitle();
         }
 
-        private void ZoomToFit()
+        public void ZoomToFit() // RCD 4-30-24
         {
             ZoomFactor = Math.Min(ClientArea.Width / CanvasRectangle.Width, (ClientArea.Height - ToolbarHeight) / CanvasRectangle.Height);
 
@@ -803,12 +821,12 @@ namespace ShareX.ScreenCaptureLib
             Close();
         }
 
-        internal void Pause()
+        public void Pause() // RCD 4-30-24
         {
             pause = true;
         }
 
-        internal void Resume()
+        public void Resume() // RCD 4-30-24
         {
             pause = false;
 

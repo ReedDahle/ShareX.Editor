@@ -1,17 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
-    <OutputType>Library</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System.Design" />
-    <Reference Include="System.IO.Compression" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ShareX.HelpersLib\ShareX.HelpersLib.csproj" />
-  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ShareX.HelpersLib\ShareX.HelpersLib.csproj" />
+  </ItemGroup>
+
 </Project>
